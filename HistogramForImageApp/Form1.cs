@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -29,8 +30,14 @@ namespace HistogramForImageApp
                     if (openFileDialog.FileName.EndsWith("jpg") || openFileDialog.FileName.EndsWith("png"))
                     {
                         var bitMap = new Bitmap(filePath);
-                        Color color = bitMap.GetPixel(3119, 0);
-                        textBox1.Text = (color.R).ToString() + " " + (color.G).ToString() + " " + (color.B).ToString();
+                        //textBox1.Text = (color.R).ToString() + " " + (color.G).ToString() + " " + (color.B).ToString();
+                        Image image = (Image)bitMap;
+                        ImageConverter imageConverter = new ImageConverter();
+                        Color color = bitMap.GetPixel(0, 0);
+                        byte[] bytes = (byte[])imageConverter.ConvertTo(image, typeof(byte[]));
+                        //textBox1.Text = bytes[0].ToString() + " " + bytes[1].ToString() + " " + bytes[2].ToString();
+                        //textBox1.Text = (color.R).ToString() + " " + (color.G).ToString() + " " + (color.B).ToString();
+                        textBox1.Text = image.PixelFormat.ToString();
                     }
                 }
             }
